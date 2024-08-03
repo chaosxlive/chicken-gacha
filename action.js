@@ -110,9 +110,9 @@ function goGacha() {
                 pancake1.classList.remove('state-hide');
                 pancake2.classList.add('state-hide');
 
-                result1boxes.item(0).textContent = randAlphabet(optCnt);
+                result1boxes.item(0).textContent = randAlphabet(usableCnt);
                 for (let i = 0; i < 10; i++) {
-                    result10boxes.item(i).textContent = randAlphabet(optCnt);
+                    result10boxes.item(i).textContent = randAlphabet(usableCnt);
                 }
 
                 if (currType === 1) {
@@ -189,8 +189,10 @@ function changeCnt() {
             USABLE[ALPHABET[i]] = !USABLE[ALPHABET[i]];
             if (USABLE[ALPHABET[i]]) {
                 e.classList.remove('sold-out');
+                usableCnt++;
             } else {
                 e.classList.add('sold-out');
+                usableCnt--;
             }
         };
         e.innerText = ALPHABET[i];
