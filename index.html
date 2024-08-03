@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pancake Gacha</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="cmd" ondblclick="option()"></div>
+
+    <div id="container">
+        <img id="logo" src="./Assets/LocoLost.png" alt="LocoLost">
+        <img id="pancake_1" class="state" src="./Assets/Pancake_1.png" alt="Cake1">
+        <img id="pancake_2" class="state state-hide" src="./Assets/Pancake_2.png" alt="Cake2">
+    </div>
+
+    <button id="go-gacha" type="button" onclick="goGacha()"></button>
+
+    <div id="type">
+        <div id="type-1" class="type-btn type-active" onclick="switchType(1)">
+            <img src="./Assets/gacha_x1.png" alt="x1" onclick="switchType(1)">
+        </div>
+        <div id="type-10" class="type-btn" onclick="switchType(10)">
+            <img src="./Assets/gacha_x10.png" alt="x10" onclick="switchType(10)">
+        </div>
+    </div>
+
+    <div id="shine"></div>
+
+    <div id="close-btn" class="hide" onclick="closeAll()"></div>
+    <div id="result-1" class="hide">
+        <div class="box"></div>
+    </div>
+    <div id="result-10" class="hide">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+
+    <div id="options" class="hide">
+        <button id="save-btn" type="button" onclick="save()">SAVE</button>
+        <label id="input-cnt-label" for="input-cnt">Choice count:</label>
+        <input id="input-cnt" type="number" min="1" max="26" value="11" onchange="changeCnt()">
+        <div id="usable-list">
+
+        </div>
+    </div>
+
+    <script src="./action.js"></script>
+</body>
+
+</html>
