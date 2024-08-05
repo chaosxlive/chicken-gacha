@@ -49,6 +49,15 @@ const result10boxes = result10.getElementsByClassName('box');
 
 const opt = document.getElementById('options');
 const optInputCnt = document.getElementById('input-cnt');
+const historyList = document.getElementById('history-list');
+const storedHistoryList = window.localStorage.getItem('historyList');
+if (storedHistoryList) {
+    storedHistoryList.split(';').forEach(h => {
+        const e = document.createElement('li');
+        e.innerText = h;
+        historyList.appendChild(e);
+    });
+}
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const USABLE = (() => {
@@ -80,7 +89,7 @@ let doubleTouch = function (e) {
         }
     }
 }
-document.getElementById('cmd').addEventListener('touchstart', doubleTouch);
+document.getElementById('logo').addEventListener('touchstart', doubleTouch);
 
 function goGacha() {
     if (currState === 2) {
@@ -110,18 +119,29 @@ function goGacha() {
                 pancake1.classList.remove('state-hide');
                 pancake2.classList.add('state-hide');
 
-                result1boxes.item(0).textContent = randAlphabet(usableCnt);
-                for (let i = 0; i < 10; i++) {
-                    result10boxes.item(i).textContent = randAlphabet(usableCnt);
-                }
-
+                let hs = [];
                 if (currType === 1) {
+                    const a = randAlphabet(usableCnt)
+                    hs.push(a);
+                    result1boxes.item(0).textContent = a;
                     result1.classList.remove('hide');
                     closeBtn.classList.remove('hide');
                 } else {
+                    for (let i = 0; i < 10; i++) {
+                        const a = randAlphabet(usableCnt)
+                        hs.push(a);
+                        result10boxes.item(i).textContent = a;
+                    }
                     result10.classList.remove('hide');
                     closeBtn.classList.remove('hide');
                 }
+                const e = document.createElement('li');
+                e.innerText = new Date().toLocaleString() + ': ' + hs.sort().join(', ');
+                historyList.appendChild(e);
+                if (historyList.childNodes.length > 10) {
+                    historyList.removeChild(historyList.childNodes[0]);
+                }
+                window.localStorage.setItem('historyList', Object.values(historyList.childNodes).map(n => n.innerText).join(';'));
             }, 500);
         }, 500);
     }, 1 * 1000);
@@ -150,10 +170,6 @@ function switchType(type) {
 
 function option() {
     if (currState === 2) {
-        return;
-    }
-    const pwd = prompt('PWD:');
-    if (pwd !== 'LOCO65') {
         return;
     }
     opt.classList.remove('hide');

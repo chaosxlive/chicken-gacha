@@ -9,15 +9,12 @@
 </head>
 
 <body>
-    <div id="cmd" ondblclick="option()"></div>
 
     <div id="container">
-        <img id="logo" src="./Assets/LocoLost.png" alt="LocoLost">
-        <img id="pancake_1" class="state" src="./Assets/Pancake_1.png" alt="Cake1">
+        <img id="logo" src="./Assets/LocoLost.png" alt="LocoLost" ondblclick="option()">
+        <img id="pancake_1" class="state" src="./Assets/Pancake_1.png" alt="Cake1" onclick="goGacha()">
         <img id="pancake_2" class="state state-hide" src="./Assets/Pancake_2.png" alt="Cake2">
     </div>
-
-    <button id="go-gacha" type="button" onclick="goGacha()"></button>
 
     <div id="type">
         <div id="type-1" class="type-btn type-active" onclick="switchType(1)">
@@ -49,11 +46,12 @@
 
     <div id="options" class="hide">
         <button id="save-btn" type="button" onclick="save()">SAVE</button>
-        <label id="input-cnt-label" for="input-cnt">Choice count:</label>
+        <h4 id="input-cnt-label">Choice count:</h4>
         <input id="input-cnt" type="number" min="1" max="26" value="11" onchange="changeCnt()">
-        <div id="usable-list">
+        <div id="usable-list"></div>
 
-        </div>
+        <h4 id="input-cnt-label">History:</h4>
+        <ul id="history-list"></ul>
     </div>
 
     <script src="./action.js"></script>
