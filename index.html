@@ -11,17 +11,17 @@
 <body>
 
     <div id="container">
-        <img id="logo" src="./Assets/LocoLost.png" alt="LocoLost" ondblclick="option()">
-        <img id="pancake_1" class="state" src="./Assets/Pancake_1.png" alt="Cake1" onclick="goGacha()">
-        <img id="pancake_2" class="state state-hide" src="./Assets/Pancake_2.png" alt="Cake2">
+        <img id="logo" src="./Assets/Logo_LocoLost.png" alt="LocoLost" ondblclick="option()">
+        <div id="pancake_1" class="state" onclick="goGacha()"></div>
+        <div id="pancake_2" class="state state-hide"></div>
     </div>
 
     <div id="type">
         <div id="type-1" class="type-btn type-active" onclick="switchType(1)">
-            <img src="./Assets/gacha_x1.png" alt="x1" onclick="switchType(1)">
+            <div id="type-1-img" onclick="switchType(1)"></div>
         </div>
         <div id="type-10" class="type-btn" onclick="switchType(10)">
-            <img src="./Assets/gacha_x10.png" alt="x10" onclick="switchType(10)">
+            <div id="type-10-img" onclick="switchType(10)"></div>
         </div>
     </div>
 
@@ -52,6 +52,11 @@
 
         <h4 id="input-cnt-label">History:</h4>
         <ul id="history-list"></ul>
+    </div>
+
+    <div id="switches-box">
+        <div id="pancake-theme" onclick="switchTheme('pancake')"></div>
+        <div id="jinsun-theme" onclick="switchTheme('jinsun')"></div>
     </div>
 
     <script src="./action.js"></script>

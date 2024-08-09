@@ -40,7 +40,7 @@ body {
     display: flex;
     border: 10px solid #FF7300;
     overflow: hidden;
-    background-image: url('./Assets/gacha_bg.png');
+    background-image: url('./Assets/Gacha_BG_Pancake.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -60,6 +60,7 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 .state {
@@ -129,7 +130,7 @@ body {
     -moz-column-gap: 1%;
     column-gap: 1%;
     background-size: contain;
-    background-image: url('./Assets/gacha_type_box.png');
+    background-image: url('./Assets/Gacha_TypeBox_Pancake.png');
     background-position: center;
 }
 
@@ -353,4 +354,120 @@ body {
 
 .usable-box.sold-out {
     background-color: #6b6b6b;
+}
+
+#pancake_1::before,
+#pancake_2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#pancake_1::before {
+    background-image: url("./Assets/Pancake_1.png");
+}
+
+#pancake_2::before {
+    background-image: url("./Assets/Pancake_2.png");
+}
+
+#type-1-img,
+#type-10-img {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#type-1-img::before,
+#type-10-img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#type-1-img::before {
+    background-image: url("./Assets/Gacha_x1_Pancake.png");
+}
+
+#type-10-img::before {
+    background-image: url("./Assets/gacha_x10.png");
+}
+
+#switches-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+#pancake-theme,
+#jinsun-theme {
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#pancake-theme {
+    background-image: url("./Assets/Icon_Pancake.png");
+}
+
+#jinsun-theme {
+    background-image: url("./Assets/Icon_Jinsun.png");
+}
+
+/* Jinsun theme */
+
+body.jinsun {
+    background-image: url("./Assets/Gacha_BG_Jinsun.png");
+}
+
+body.jinsun #pancake_1 {
+    top: 2%;
+}
+
+body.jinsun #pancake_1::before {
+    background-image: url("./Assets/Jinsun_1.png");
+}
+
+body.jinsun #pancake_2 {
+    width: 100%;
+    height: 100%;
+    left: 14%;
+}
+
+body.jinsun #pancake_2::before {
+    background-image: url("./Assets/Jinsun_2.png");
+}
+
+body.jinsun #type {
+    background: transparent;
+}
+
+body.jinsun #type-1-img::before {
+    background-image: url("./Assets/Gacha_x1_Jinsun.png");
+}
+
+body.jinsun #type-10-img::before {
+    background-image: url("./Assets/Gacha_x10_Jinsun.png");
+}
+
+body.jinsun .box {
+    background-color: #e74646ef;
 }

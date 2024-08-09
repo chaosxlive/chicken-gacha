@@ -1,11 +1,16 @@
+// My code is ugly :(
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let currState = 1;
 let currType = 1;
 
-let optCnt = +(window.localStorage.getItem('optCnt') || 11);
+let currTheme = window.localStorage.getItem('theme') || 'pancake';
+
+let optCnt = 1;
 let usableCnt = optCnt;
 
+const body = document.querySelector('body');
+
 const resize = () => {
-    const body = document.querySelector('body');
     const w = window.innerWidth;
     const h = window.innerHeight;
     const r = 1366 / 1024;
@@ -59,9 +64,17 @@ if (storedHistoryList) {
     });
 }
 
-const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const USABLE = (() => {
-    const c = window.localStorage.getItem('usable');
+const USABLE_PANCAKE = loadUsable('pancake');
+const USABLE_JINSUN = loadUsable('jinsun');
+
+function loadUsable(theme) {
+    const c = (() => {
+        if (theme === 'pancake') {
+            return window.localStorage.getItem('usable-pancake');
+        } else {
+            return window.localStorage.getItem('usable-jinsun');
+        }
+    })();
     if (c) {
         return JSON.parse(c);
     }
@@ -70,10 +83,20 @@ const USABLE = (() => {
         v[ALPHABET[i]] = true;
     }
     return v;
-})();
+}
 
-optInputCnt.value = optCnt;
-changeCnt();
+refreshOptCnt(currTheme);
+
+function refreshOptCnt(theme) {
+    if (theme === 'pancake') {
+        optCnt = +(window.localStorage.getItem('optCnt-pancake') || 11);
+    } else {
+        optCnt = +(window.localStorage.getItem('optCnt-jinsun') || 15);
+    }
+    usableCnt = optCnt;
+    optInputCnt.value = optCnt;
+    changeCnt();
+}
 
 let expired = 0;
 let doubleTouch = function (e) {
@@ -136,7 +159,7 @@ function goGacha() {
                     closeBtn.classList.remove('hide');
                 }
                 const e = document.createElement('li');
-                e.innerText = new Date().toLocaleString() + ': ' + hs.sort().join(', ');
+                e.innerText = `${new Date().toLocaleString()}: [${currTheme}] ${hs.sort().join(', ')}`;
                 historyList.appendChild(e);
                 if (historyList.childNodes.length > 10) {
                     historyList.removeChild(historyList.childNodes[0]);
@@ -178,8 +201,13 @@ function option() {
 function save() {
     opt.classList.add('hide');
 
-    window.localStorage.setItem('optCnt', optCnt);
-    window.localStorage.setItem('usable', JSON.stringify(USABLE));
+    if (currTheme === 'pancake') {
+        window.localStorage.setItem('optCnt-pancake', optCnt);
+        window.localStorage.setItem('usable-pancake', JSON.stringify(USABLE_PANCAKE));
+    } else {
+        window.localStorage.setItem('optCnt-jinsun', optCnt);
+        window.localStorage.setItem('usable-jinsun', JSON.stringify(USABLE_JINSUN));
+    }
 }
 
 function changeCnt() {
@@ -195,6 +223,13 @@ function changeCnt() {
     const list = document.getElementById('usable-list');
     list.innerHTML = '';
     usableCnt = 0;
+    const USABLE = (() => {
+        if (currTheme === 'pancake') {
+            return USABLE_PANCAKE;
+        } else {
+            return USABLE_JINSUN;
+        }
+    })();
     for (let i = 0; i < optCnt; i++) {
         const e = document.createElement('div');
         e.classList.add('usable-box');
@@ -231,6 +266,13 @@ function randAlphabet(n) {
     const r = randInt(n);
     let i = 0;
     let j = 0;
+    const USABLE = (() => {
+        if (currTheme === 'pancake') {
+            return USABLE_PANCAKE;
+        } else {
+            return USABLE_JINSUN;
+        }
+    })();
     do {
         if (USABLE[ALPHABET[i]]) {
             j++;
@@ -241,4 +283,26 @@ function randAlphabet(n) {
         i++;
     } while (i < optCnt);
     return '-';
+}
+
+function switchTheme(theme) {
+    switch (theme) {
+        case 'pancake':
+            body.classList.remove("jinsun");
+            currTheme = 'pancake';
+            window.localStorage.setItem('theme', 'pancake');
+            break;
+        case 'jinsun':
+            body.classList.add("jinsun");
+            currTheme = 'jinsun';
+            window.localStorage.setItem('theme', 'jinsun');
+            break;
+        default:
+            break;
+    }
+    refreshOptCnt(theme);
+}
+
+if (currTheme === 'jinsun') {
+    switchTheme('jinsun');
 }
