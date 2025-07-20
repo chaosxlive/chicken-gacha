@@ -27,8 +27,8 @@ const resize = () => {
     for (let i = 0; i < boxes.length; i++) {
         boxes[i].style.width = `${m}px`;
         boxes[i].style.height = `${m}px`;
-        boxes[i].style.lineHeight = `${m}px`;
-        boxes[i].style.fontSize = `${m}px`;
+        boxes[i].style.lineHeight = `${m * 0.25}px`;
+        boxes[i].style.fontSize = `${m * 0.25}px`;
     }
 };
 

@@ -283,15 +283,21 @@ body {
 }
 
 .box {
+    background-size: contain;
+    padding-left: 0.5rem;
     background-color: #e79946ef;
     border: 8px solid #fff;
     border-radius: 20%;
-    text-align: center;
+    text-align: start;
     vertical-align: middle;
     font-weight: bolder;
     -ms-grid-column-align: center;
     justify-self: center;
-    color: #fff3ed;
+    color: #18ab07;
+    text-shadow: -1px -1px 0 #fff3ed,
+        1px -1px 0 #fff3ed,
+        -1px 1px 0 #fff3ed,
+        1px 1px 0 #fff3ed;
 }
 
 #close-btn {
@@ -457,4 +463,28 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+.result-code-A {
+    background-image: url("./Assets/A.jpg");
+}
+
+.result-code-B {
+    background-image: url("./Assets/B.jpg");
+}
+
+.result-code-C {
+    background-image: url("./Assets/C.jpg");
+}
+
+.result-code-D {
+    background-image: url("./Assets/D.jpg");
+}
+
+.result-code-E {
+    background-image: url("./Assets/E.jpg");
+}
+
+.result-code-F {
+    background-image: url("./Assets/F.jpg");
 }
