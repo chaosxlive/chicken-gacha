@@ -3,7 +3,7 @@ const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let currState = 1;
 let currType = 1;
 
-let currTheme = window.localStorage.getItem('theme') || 'pancake';
+let currTheme = window.localStorage.getItem('theme') || 'chicken';
 
 let optCnt = 1;
 let usableCnt = optCnt;
@@ -40,16 +40,19 @@ const btnGo = document.getElementById('go-gacha');
 
 const shine = document.getElementById('shine');
 
-const pancake1 = document.getElementById('pancake_1');
-const pancake2 = document.getElementById('pancake_2');
+const chicken1 = document.getElementById('chicken_1');
+const chicken2 = document.getElementById('chicken_2');
 
 const type1 = document.getElementById('type-1');
+const type5 = document.getElementById('type-5');
 const type10 = document.getElementById('type-10');
 
 const closeBtn = document.getElementById('close-btn');
 const result1 = document.getElementById('result-1');
+const result5 = document.getElementById('result-5');
 const result10 = document.getElementById('result-10');
 const result1boxes = result1.getElementsByClassName('box');
+const result5boxes = result5.getElementsByClassName('box');
 const result10boxes = result10.getElementsByClassName('box');
 
 const opt = document.getElementById('options');
@@ -64,15 +67,12 @@ if (storedHistoryList) {
     });
 }
 
-const USABLE_PANCAKE = loadUsable('pancake');
-const USABLE_JINSUN = loadUsable('jinsun');
+const USABLE_CHICKEN = loadUsable('chicken');
 
 function loadUsable(theme) {
     const c = (() => {
-        if (theme === 'pancake') {
-            return window.localStorage.getItem('usable-pancake');
-        } else {
-            return window.localStorage.getItem('usable-jinsun');
+        if (theme === 'chicken') {
+            return window.localStorage.getItem('usable-chicken');
         }
     })();
     if (c) {
@@ -88,10 +88,8 @@ function loadUsable(theme) {
 refreshOptCnt(currTheme);
 
 function refreshOptCnt(theme) {
-    if (theme === 'pancake') {
-        optCnt = +(window.localStorage.getItem('optCnt-pancake') || 11);
-    } else {
-        optCnt = +(window.localStorage.getItem('optCnt-jinsun') || 15);
+    if (theme === 'chicken') {
+        optCnt = +(window.localStorage.getItem('optCnt-chicken') || 6);
     }
     usableCnt = optCnt;
     optInputCnt.value = optCnt;
@@ -121,8 +119,8 @@ function goGacha() {
 
     currState = 2;
 
-    pancake1.classList.add('state-hide');
-    pancake2.classList.remove('state-hide');
+    chicken1.classList.add('state-hide');
+    chicken2.classList.remove('state-hide');
 
     const showing = setInterval(() => {
         shine.style.opacity = +shine.style.opacity + 0.01;
@@ -139,21 +137,40 @@ function goGacha() {
             clearInterval(hiding);
 
             setTimeout(() => {
-                pancake1.classList.remove('state-hide');
-                pancake2.classList.add('state-hide');
+                chicken1.classList.remove('state-hide');
+                chicken2.classList.add('state-hide');
 
+                const removeAllResultClass = (ele) => {
+                    for (const c of ALPHABET) {
+                        ele.classList.remove(`result-code-${c}`);
+                    }
+                };
                 let hs = [];
                 if (currType === 1) {
                     const a = randAlphabet(usableCnt)
                     hs.push(a);
                     result1boxes.item(0).textContent = a;
+                    removeAllResultClass(result1boxes.item(0));
+                    result1boxes.item(0).classList.add(`result-code-${a}`);
                     result1.classList.remove('hide');
+                    closeBtn.classList.remove('hide');
+                } else if (currType === 5) {
+                    for (let i = 0; i < 5; i++) {
+                        const a = randAlphabet(usableCnt)
+                        hs.push(a);
+                        result5boxes.item(i).textContent = a;
+                        removeAllResultClass(result5boxes.item(i));
+                        result5boxes.item(i).classList.add(`result-code-${a}`);
+                    }
+                    result5.classList.remove('hide');
                     closeBtn.classList.remove('hide');
                 } else {
                     for (let i = 0; i < 10; i++) {
                         const a = randAlphabet(usableCnt)
                         hs.push(a);
                         result10boxes.item(i).textContent = a;
+                        removeAllResultClass(result10boxes.item(i));
+                        result10boxes.item(i).classList.add(`result-code-${a}`);
                     }
                     result10.classList.remove('hide');
                     closeBtn.classList.remove('hide');
@@ -174,6 +191,7 @@ function closeAll() {
     currState = 1;
     closeBtn.classList.add('hide');
     result1.classList.add('hide');
+    result5.classList.add('hide');
     result10.classList.add('hide');
 }
 
@@ -183,10 +201,16 @@ function switchType(type) {
     }
     currType = type;
     if (currType === 1) {
-        type10.classList.remove('type-active');
         type1.classList.add('type-active');
+        type5.classList.remove('type-active');
+        type10.classList.remove('type-active');
+    } else if (currType === 5) {
+        type1.classList.remove('type-active');
+        type5.classList.add('type-active');
+        type10.classList.remove('type-active');
     } else {
         type1.classList.remove('type-active');
+        type5.classList.remove('type-active');
         type10.classList.add('type-active');
     }
 }
@@ -201,12 +225,9 @@ function option() {
 function save() {
     opt.classList.add('hide');
 
-    if (currTheme === 'pancake') {
-        window.localStorage.setItem('optCnt-pancake', optCnt);
-        window.localStorage.setItem('usable-pancake', JSON.stringify(USABLE_PANCAKE));
-    } else {
-        window.localStorage.setItem('optCnt-jinsun', optCnt);
-        window.localStorage.setItem('usable-jinsun', JSON.stringify(USABLE_JINSUN));
+    if (currTheme === 'chicken') {
+        window.localStorage.setItem('optCnt-chicken', optCnt);
+        window.localStorage.setItem('usable-chicken', JSON.stringify(USABLE_CHICKEN));
     }
 }
 
@@ -224,10 +245,8 @@ function changeCnt() {
     list.innerHTML = '';
     usableCnt = 0;
     const USABLE = (() => {
-        if (currTheme === 'pancake') {
-            return USABLE_PANCAKE;
-        } else {
-            return USABLE_JINSUN;
+        if (currTheme === 'chicken') {
+            return USABLE_CHICKEN;
         }
     })();
     for (let i = 0; i < optCnt; i++) {
@@ -267,10 +286,8 @@ function randAlphabet(n) {
     let i = 0;
     let j = 0;
     const USABLE = (() => {
-        if (currTheme === 'pancake') {
-            return USABLE_PANCAKE;
-        } else {
-            return USABLE_JINSUN;
+        if (currTheme === 'chicken') {
+            return USABLE_CHICKEN;
         }
     })();
     do {
@@ -287,22 +304,13 @@ function randAlphabet(n) {
 
 function switchTheme(theme) {
     switch (theme) {
-        case 'pancake':
-            body.classList.remove("jinsun");
-            currTheme = 'pancake';
-            window.localStorage.setItem('theme', 'pancake');
-            break;
-        case 'jinsun':
-            body.classList.add("jinsun");
-            currTheme = 'jinsun';
-            window.localStorage.setItem('theme', 'jinsun');
+        case 'chicken':
+            // body.classList.remove("");
+            currTheme = 'chicken';
+            window.localStorage.setItem('theme', 'chicken');
             break;
         default:
             break;
     }
     refreshOptCnt(theme);
-}
-
-if (currTheme === 'jinsun') {
-    switchTheme('jinsun');
 }

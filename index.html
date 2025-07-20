@@ -4,21 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pancake Gacha</title>
+    <title>Chicken Gacha</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <div id="container">
-        <img id="logo" src="./Assets/Logo_LocoLost.png" alt="LocoLost" ondblclick="option()">
-        <div id="pancake_1" class="state" onclick="goGacha()"></div>
-        <div id="pancake_2" class="state state-hide"></div>
+        <img id="logo" src="./Assets/LOGO.png" alt="LocoLost" ondblclick="option()">
+        <div id="chicken_1" class="state" onclick="goGacha()"></div>
+        <div id="chicken_2" class="state state-hide"></div>
     </div>
 
     <div id="type">
         <div id="type-1" class="type-btn type-active" onclick="switchType(1)">
             <div id="type-1-img" onclick="switchType(1)"></div>
+        </div>
+        <div id="type-5" class="type-btn" onclick="switchType(5)">
+            <div id="type-5-img" onclick="switchType(5)"></div>
         </div>
         <div id="type-10" class="type-btn" onclick="switchType(10)">
             <div id="type-10-img" onclick="switchType(10)"></div>
@@ -29,6 +32,13 @@
 
     <div id="close-btn" class="hide" onclick="closeAll()"></div>
     <div id="result-1" class="hide">
+        <div class="box"></div>
+    </div>
+    <div id="result-5" class="hide">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
         <div class="box"></div>
     </div>
     <div id="result-10" class="hide">
@@ -55,8 +65,8 @@
     </div>
 
     <div id="switches-box">
-        <div id="pancake-theme" onclick="switchTheme('pancake')"></div>
-        <div id="jinsun-theme" onclick="switchTheme('jinsun')"></div>
+        <!-- <div id="pancake-theme" onclick="switchTheme('pancake')"></div>
+        <div id="jinsun-theme" onclick="switchTheme('jinsun')"></div> -->
     </div>
 
     <script src="./action.js"></script>
