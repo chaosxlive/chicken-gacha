@@ -3,7 +3,9 @@ const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let currState = 1;
 let currType = 1;
 
-let currTheme = window.localStorage.getItem('theme') || 'chicken';
+const APP_PREFIX = 'CHICKEN_V1.1_';
+
+let currTheme = window.localStorage.getItem(APP_PREFIX + 'theme') || 'chicken';
 
 let optCnt = 1;
 let usableCnt = optCnt;
@@ -58,7 +60,7 @@ const result10boxes = result10.getElementsByClassName('box');
 const opt = document.getElementById('options');
 const optInputCnt = document.getElementById('input-cnt');
 const historyList = document.getElementById('history-list');
-const storedHistoryList = window.localStorage.getItem('historyList');
+const storedHistoryList = window.localStorage.getItem(APP_PREFIX + 'historyList');
 if (storedHistoryList) {
     storedHistoryList.split(';').forEach(h => {
         const e = document.createElement('li');
@@ -72,7 +74,7 @@ const USABLE_CHICKEN = loadUsable('chicken');
 function loadUsable(theme) {
     const c = (() => {
         if (theme === 'chicken') {
-            return window.localStorage.getItem('usable-chicken');
+            return window.localStorage.getItem(APP_PREFIX + 'usable-chicken');
         }
     })();
     if (c) {
@@ -89,7 +91,7 @@ refreshOptCnt(currTheme);
 
 function refreshOptCnt(theme) {
     if (theme === 'chicken') {
-        optCnt = +(window.localStorage.getItem('optCnt-chicken') || 6);
+        optCnt = +(window.localStorage.getItem(APP_PREFIX + 'optCnt-chicken') || 6);
     }
     usableCnt = optCnt;
     optInputCnt.value = optCnt;
@@ -181,7 +183,7 @@ function goGacha() {
                 if (historyList.childNodes.length > 10) {
                     historyList.removeChild(historyList.childNodes[0]);
                 }
-                window.localStorage.setItem('historyList', Object.values(historyList.childNodes).map(n => n.innerText).join(';'));
+                window.localStorage.setItem(APP_PREFIX + 'historyList', Object.values(historyList.childNodes).map(n => n.innerText).join(';'));
             }, 500);
         }, 500);
     }, 1 * 1000);
@@ -226,8 +228,8 @@ function save() {
     opt.classList.add('hide');
 
     if (currTheme === 'chicken') {
-        window.localStorage.setItem('optCnt-chicken', optCnt);
-        window.localStorage.setItem('usable-chicken', JSON.stringify(USABLE_CHICKEN));
+        window.localStorage.setItem(APP_PREFIX + 'optCnt-chicken', optCnt);
+        window.localStorage.setItem(APP_PREFIX + 'usable-chicken', JSON.stringify(USABLE_CHICKEN));
     }
 }
 
@@ -307,7 +309,7 @@ function switchTheme(theme) {
         case 'chicken':
             // body.classList.remove("");
             currTheme = 'chicken';
-            window.localStorage.setItem('theme', 'chicken');
+            window.localStorage.setItem(APP_PREFIX + 'theme', 'chicken');
             break;
         default:
             break;
